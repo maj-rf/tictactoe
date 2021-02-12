@@ -10,8 +10,9 @@ div.board{
     display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: repeat(3,1fr);
-    width: 300px;
-    height: 300px;
+    grid-gap: 2px;
+    width: 390px;
+    height: 390px;
     border: 2px solid black;
 }
 
@@ -23,5 +24,9 @@ div.board{
     min-height: auto;
     background-color: rgb(190, 190, 190);
     border: 1px solid white;
+    font-size: 100px;
 }
 
+div#squares:hover{
+    background-color: rgb(153, 152, 152);
+}
