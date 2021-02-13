@@ -5,28 +5,85 @@ html,body{
     overflow: hidden;
 }
 
-div.board{
-    margin: auto;
+*::after, *::before{
+  box-sizing :border-box;
+}
+
+header{
+display: flex; 
+justify-content: center;
+}
+
+h1{
+  color: teal;
+}
+
+h1#tac{
+  color: rgb(190, 146, 87);
+}
+
+.board{
+    width: 100vw;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: repeat(3,1fr);
-    grid-gap: 2px;
-    width: 390px;
-    height: 390px;
-    border: 2px solid black;
-}
-
-#squares{
-    display: flex;
     justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(3,auto);
     align-items: center;
-    min-width: auto;
-    min-height: auto;
-    background-color: rgb(190, 190, 190);
-    border: 1px solid white;
-    font-size: 100px;
 }
 
-div#squares:hover{
-    background-color: rgb(153, 152, 152);
+.grid{
+    width: 110px;
+    height: 110px;
+    background-color: white;
+    border: 2px solid black;
+    font-size: 100px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.grid:hover{
+    background-color: rgb(236, 232, 232);
+}
+
+.grid:first-child,
+.grid:nth-child(2),
+.grid:nth-child(3){
+  border-top: none;
+}
+
+.grid:first-child,
+.grid:nth-child(4),
+.grid:nth-child(7){
+  border-left:none;
+}
+
+.grid:nth-child(3n + 1){
+  border-left:none;
+}
+
+.grid:nth-child(3n){
+  border-right:none;
+}
+
+.grid:last-child,
+.grid:nth-child(7),
+.grid:nth-child(8){
+  border-bottom:none;
+}
+
+div.game-state{
+    margin-top: 20px;
+    display: flex; 
+    justify-content: center;
+    width: auto;
+    border: 1px solid teal;
+}
+
+.X{
+    color: teal;
+}
+
+.O{
+    color: rgb(190, 146, 87);
 }

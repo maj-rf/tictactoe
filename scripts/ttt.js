@@ -1,57 +1,76 @@
-const player = (name, move) =>{
-    const getName = () => name;
-    const getMove = () => move;
-    return {getName, getMove};
+const Player = (name, mark) =>{
+    return {name, mark};
 }
 
-const gameboard = (() =>{
-    //initialize board values, get players
-    let boardArray = ["","","","","","","","",""] ;
-    let winCon = ["012", "345", "678", "036", "147", "258", "048", "246"];
-    let playerOne = player("majed", "X");
-    let playerTwo = player("computer", "O");
+//global lol
+let playerOne = Player("P1", "X");
+let playerTwo = Player("Computer", "O");
 
-    //selectors &  events
+const gameboard = (() =>{
+    //initialize board values
+    let boardArray = ["","","","","","","","",""] ;
+    let winCondition = [[0,1,2], [3,4,5], [6,7,8], [0,3,6,], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
+    let p1Turn = true;
+    return {boardArray, winCondition, p1Turn};
+})();
+
+const gameflow = (() =>{
+    //selectors & events
+    let xIsNext = gameboard.p1Turn;
+    let board = gameboard.boardArray;
     const squares = document.querySelectorAll("#squares");
-    console.log(Array.from(squares));
+    const state = document.querySelector(".game-state");
+    state.innerText = `It's ${playerOne.name}'s turn. ${playerOne.mark}`;
     squares.forEach(square =>{
-    square.addEventListener("click", function(e){
-            playRound(e, playerOne.getMove(), playerTwo.getMove());
-        });
+    square.addEventListener("click", handleClick, {once: true}) //one click per square only
     });
 
-    //update
-    const playRound = (e, p1Move, p2Move) => {
-        e.target.textContent = `${p1Move}`;
-        boardArray[e.target.getAttribute("data-num")] = p1Move;
-        playerTwoTurn(p2Move, boardArray, e);
-        // console.log(e.target.getAttribute("data-num"));
-        // console.log(boardArray);
-    }
+    function handleClick(e){  
+        if(xIsNext){
+            e.target.classList.add("X");
+            displayController.updateBoard(e, playerOne.mark,board);
+            displayController.showCurrentPlayer(state, playerTwo.name, playerTwo.mark);
+            xIsNext=false;
+            checkWinner(board,state);
 
-    //move randomizer
-    const playerTwoTurn = (p2move, board, squareDiv) => {
-        let randomIndex = Math.floor(Math.random() * board.length);
-        console.log(board);
-        console.log(randomIndex);
-        if(board[randomIndex] === "" && ((board[randomIndex]!== "X") || (board[randomIndex]!== "O"))){
-            board[randomIndex] = p2move;
-            console.log(board);
-            squareDiv.target.parentElement.childNodes[randomIndex].textContent = `${p2move}`;
         }
-        else playerTwoTurn(p2move, board, squareDiv);
+        else if(!xIsNext){
+            e.target.classList.add("O");
+            displayController.updateBoard(e, playerTwo.mark,board);
+            displayController.showCurrentPlayer(state, playerOne.name, playerOne.mark);
+            xIsNext = true;
+            checkWinner(board,state);
+        }
     }
-    
 
+    const checkWinner = (board,state) =>{
+        let win = gameboard.winCondition;
+        return(win.forEach(element =>{
+            let checker = "";
+            for(let count= 0; count < 3; count++){
+                checker += board[element[count]];
+            }
+                if(checker ==="XXX"){
+                    return state.innerText = `${playerOne.name} wins`;
+                }
+                else if(checker === "OOO"){
+                    return state.innerText = `${playerTwo.name} wins`;
+                }
+                else return;
+        }));
+    } 
 })();
 
-const gameFlow = (() =>{
-    
+const displayController = (() => {
+    const updateBoard = (e, mark , board) => {
+        board[e.target.getAttribute("data-num")] = mark;
+        e.target.innerText = `${mark}`;
+        return board;
+    }
+
+    const showCurrentPlayer = (state, playerName, mark) => {
+        state.innerText = `It's ${playerName}'s turn. ${mark}`;
+    }
+
+    return {updateBoard, showCurrentPlayer};
 })();
-
-
-
-
-
-
-
