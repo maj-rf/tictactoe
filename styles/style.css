@@ -46,6 +46,8 @@ html,body{
 }
 
 .play-game{
+  height: 100vh;
+  width: 100vw;
   display: none;
   flex-direction: column;
   justify-content: center;
