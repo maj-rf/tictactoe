@@ -8,23 +8,32 @@
     <title>Tic-Tac-Toe</title>
 </head>
 <body>
-    <header>
+    <div class="start-game"> 
+      <div>TicTacToe</div> 
+      <button class="play-btn">Play Game</button>
+    </div>
+    <div class="play-game">
+      <header>
         <h1>Tic</h1>
         <h1 id="tac">Tac</h1>
         <h1>Toe</h1> 
-    </header>
-    <div class="board" id="gameboard">
-        <div class="grid" id="squares" data-num="0"></div>
-        <div class="grid" id="squares" data-num="1"></div>
-        <div class="grid" id="squares" data-num="2"></div>
-        <div class="grid" id="squares" data-num="3"></div>
-        <div class="grid" id="squares" data-num="4"></div>
-        <div class="grid" id="squares" data-num="5"></div>
-        <div class="grid" id="squares" data-num="6"></div>
-        <div class="grid" id="squares" data-num="7"></div>
-        <div class="grid" id="squares" data-num="8"></div>
+      </header>
+      <div class="board" id="gameboard">
+          <div class="grid grid-hover" id="squares" data-num="0"></div>
+          <div class="grid grid-hover" id="squares" data-num="1"></div>
+          <div class="grid grid-hover" id="squares" data-num="2"></div>
+          <div class="grid grid-hover" id="squares" data-num="3"></div>
+          <div class="grid grid-hover" id="squares" data-num="4"></div>
+          <div class="grid grid-hover" id="squares" data-num="5"></div>
+          <div class="grid grid-hover" id="squares" data-num="6"></div>
+          <div class="grid grid-hover" id="squares" data-num="7"></div>
+          <div class="grid grid-hover" id="squares" data-num="8"></div>
+      </div>
+      <div class="game-state"></div>
+      <div class="settings">
+        <button class="reset-btn" id="reset">Reset Game</button>
+      </div>
     </div>
-    <div class="game-state"></div>
     <script src ="scripts/ttt.js"></script>
 </body>
 </html>
