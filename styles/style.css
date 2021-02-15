@@ -17,7 +17,7 @@ html,body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 90px;
+  font-size: 70px;
   font-family: Monospace;
   color: white;
   background-color: #3A3B3C;
@@ -31,7 +31,6 @@ html,body{
   background:teal;
   padding: 20px;
   border-radius: 5px;
-  display: inline-block;
   border: none;
   transition: all 0.4s ease 0s;
 }
@@ -170,7 +169,7 @@ button#reset:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 90px;
+  font-size: 70px;
   color: white;
   background-color: #3A3B3C
   }
