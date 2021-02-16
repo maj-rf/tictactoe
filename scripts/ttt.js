@@ -95,7 +95,7 @@ const gameflow = (() => {
       for (let index = 0; index < 3; index++) {
         checker += board[element[index]];
       }
-      if (checker === "XXX") {
+      if(checker === "XXX") {
         state.innerText = `${playerOne.name} wins! ${playerOne.mark}`;
         return displayController.isGameOver();
       }
@@ -103,7 +103,7 @@ const gameflow = (() => {
         state.innerText = `${playerTwo.name} wins! ${playerTwo.mark}`;
         return displayController.isGameOver();
       }
-      else if (fullBoardCheck === undefined){
+      else if (fullBoardCheck.length === 0){
         state.innerText = "It's a tie! Reset to play again.";
         return displayController.isGameOver();
       }
