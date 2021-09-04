@@ -2,6 +2,8 @@
 
 The Tic-Tac-Toe Project for TOP
 
+[Live Preview here!](https://bananabread08.github.io/tictactoe/)
+
 ## Overview
 
 A project to showcase what we learned about Objects and apply Factory Functions & Modules in the code skeleton.
