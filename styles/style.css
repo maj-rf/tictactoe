@@ -56,3 +56,17 @@ h1 {
 .grid:nth-child(8) {
   border-bottom: none;
 }
+#gameover-modal {
+  padding: 3rem;
+}
+#gameover-modal[open] {
+  -webkit-animation: show 1s ease normal;
+}
+@-webkit-keyframes show {
+  from {
+    transform: translateY(-110%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}

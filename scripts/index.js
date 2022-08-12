@@ -15,7 +15,7 @@ const Player = (name, marker) => {
 };
 
 const Gameboard = (() => {
-  const board = new Array(9).fill(null);
+  let board = new Array(9).fill(null);
   const winCondition = [
     [0, 1, 2],
     [3, 4, 5],
@@ -27,16 +27,21 @@ const Gameboard = (() => {
     [2, 4, 6],
   ];
 
+  function resetBoard() {
+    return (board = new Array(9).fill(null));
+  }
   return {
     get board() {
       return board;
     },
     winCondition,
+    resetBoard,
   };
 })();
 
 const display = (() => {
   let grids = document.querySelectorAll('.grid');
+  let restart = document.querySelector('.restart');
 
   function render() {
     for (let i = 0; i < 9; i++) {
@@ -44,42 +49,56 @@ const display = (() => {
     }
     return;
   }
-  return { grids, render };
+
+  function showWinner(player) {
+    let modal = document.getElementById('gameover-modal');
+    let winner = document.querySelector('.winner');
+    winner.textContent = 'Winner: ' + player.name;
+    modal.showModal();
+    return;
+  }
+
+  return { grids, render, showWinner, restart };
 })();
 
 const game = (() => {
-  const p1 = Player('Maj', 'X');
-  const p2 = Player('CPU', 'O');
+  let p1 = Player('Maj', 'X');
+  let p2 = Player('CPU', 'O');
   let currentPlayer = p1;
+
+  function restartGame() {
+    Gameboard.resetBoard();
+    p1 = Player('Trial', 'X');
+    p2 = Player('Bot', 'O');
+    currentPlayer = p1;
+    display.render();
+    return;
+  }
 
   function changePlayer(player) {
     return player.marker === 'X' ? p2 : p1;
   }
 
   function nextMove(index, player) {
+    if (Gameboard.board[index]) return;
     Gameboard.board[index] = player.marker;
     display.render();
     return;
   }
 
   function checkWinner(player) {
-    let mark = player.marker;
-    let board = Gameboard.board;
     return Gameboard.winCondition.forEach((checker) => {
-      if (checker.every((index) => board[index] === mark))
-        return console.log(`${player.name}`);
+      if (checker.every((index) => Gameboard.board[index] === player.marker))
+        return display.showWinner(player);
     });
   }
 
+  display.restart.addEventListener('click', restartGame);
   display.grids.forEach((grid, index) =>
-    grid.addEventListener(
-      'click',
-      () => {
-        nextMove(index, currentPlayer);
-        checkWinner(currentPlayer);
-        currentPlayer = changePlayer(currentPlayer);
-      },
-      { once: true }
-    )
+    grid.addEventListener('click', () => {
+      nextMove(index, currentPlayer);
+      checkWinner(currentPlayer);
+      currentPlayer = changePlayer(currentPlayer);
+    })
   );
 })();
