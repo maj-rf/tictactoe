@@ -13,6 +13,17 @@ h1 {
   text-align: center;
 }
 
+h1 span {
+  color: #3a3b3c;
+}
+
+.game {
+  display: none;
+}
+.pre-game {
+  display: grid;
+  place-items: center;
+}
 #gameboard {
   width: 100vw;
   display: grid;
@@ -29,6 +40,10 @@ h1 {
   border: 2px solid black;
   font-size: 90px;
   text-align: center;
+}
+
+.grid:hover {
+  background-color: antiquewhite;
 }
 
 .grid:first-child,
@@ -69,4 +84,19 @@ h1 {
   to {
     transform: translateY(0%);
   }
+}
+
+.restart {
+  padding: 1rem;
+  background-color: aqua;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.x-mark {
+  color: aquamarine;
+}
+
+.o-mark {
+  color: #3a3b3c;
 }

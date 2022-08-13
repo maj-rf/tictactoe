@@ -42,6 +42,12 @@ const Gameboard = (() => {
 const display = (() => {
   let grids = document.querySelectorAll('.grid');
   let restart = document.querySelector('.restart');
+  let changeName = document.querySelector('.change');
+  let start = document.querySelector('.start');
+  let game = document.querySelector('.game');
+  let pregame = document.querySelector('.pre-game');
+  let p1 = document.querySelector('#player-1');
+  let p2 = document.querySelector('#player-2');
 
   function render() {
     for (let i = 0; i < 9; i++) {
@@ -53,25 +59,42 @@ const display = (() => {
   function showWinner(player) {
     let modal = document.getElementById('gameover-modal');
     let winner = document.querySelector('.winner');
-    winner.textContent = 'Winner: ' + player.name;
+    winner.textContent = !player ? 'Draw' : 'Winner: ' + player.name;
     modal.showModal();
     return;
   }
 
-  return { grids, render, showWinner, restart };
+  return {
+    grids,
+    render,
+    showWinner,
+    restart,
+    start,
+    game,
+    pregame,
+    p1,
+    p2,
+    changeName,
+  };
 })();
 
 const game = (() => {
-  let p1 = Player('Maj', 'X');
-  let p2 = Player('CPU', 'O');
-  let currentPlayer = p1;
+  let p1;
+  let p2;
+  let currentPlayer;
 
   function restartGame() {
     Gameboard.resetBoard();
-    p1 = Player('Trial', 'X');
-    p2 = Player('Bot', 'O');
     currentPlayer = p1;
     display.render();
+  }
+
+  function changeName() {
+    Gameboard.resetBoard();
+    currentPlayer = p1;
+    display.render();
+    display.game.style.display = 'none';
+    display.pregame.style.display = 'block';
     return;
   }
 
@@ -87,13 +110,33 @@ const game = (() => {
   }
 
   function checkWinner(player) {
-    return Gameboard.winCondition.forEach((checker) => {
-      if (checker.every((index) => Gameboard.board[index] === player.marker))
-        return display.showWinner(player);
+    let boardHasSpace = !Gameboard.board.every(
+      (grid) => grid === 'X' || grid === 'O'
+    );
+
+    let hasWinner = Gameboard.winCondition.some((win) => {
+      return win.every((index) => Gameboard.board[index] === player.marker)
+        ? true
+        : false;
     });
+
+    if (hasWinner) return display.showWinner(player);
+    else if (!hasWinner && !boardHasSpace) display.showWinner();
+    else return;
   }
 
+  //Events
+  display.start.addEventListener('click', (e) => {
+    e.preventDefault();
+    display.game.style.display = 'block';
+    display.pregame.style.display = 'none';
+    p1 = Player(display.p1.value, 'X');
+    p2 = Player(display.p2.value, 'O');
+    currentPlayer = p1;
+  });
+
   display.restart.addEventListener('click', restartGame);
+  display.changeName.addEventListener('click', changeName);
   display.grids.forEach((grid, index) =>
     grid.addEventListener('click', () => {
       nextMove(index, currentPlayer);
