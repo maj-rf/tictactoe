@@ -4,25 +4,59 @@
   box-sizing: border-box;
 }
 
+:root {
+  --blk100: #3a3a3a;
+  --blk700: rgb(14, 14, 14);
+  --wht100: rgb(255, 255, 255);
+  --wht700: rgb(219, 218, 218);
+}
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  height: 100%;
 }
 
 h1 {
   text-align: center;
 }
 
-h1 span {
-  color: #3a3b3c;
-}
-
 .game {
   display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 .pre-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--blk100);
+  color: var(--wht100);
+}
+.name-form {
   display: grid;
   place-items: center;
+
+  max-width: 500px;
+}
+
+.name-form input {
+  padding: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.name-form input:focus {
+  outline: none;
+  border: 2px solid var(--wht700);
+}
+
+label,
+input {
+  display: inline-block;
 }
 #gameboard {
   width: 100vw;
@@ -43,7 +77,7 @@ h1 span {
 }
 
 .grid:hover {
-  background-color: antiquewhite;
+  background-color: var(--wht700);
 }
 
 .grid:first-child,
@@ -71,8 +105,10 @@ h1 span {
 .grid:nth-child(8) {
   border-bottom: none;
 }
+
 #gameover-modal {
   padding: 3rem;
+  text-align: center;
 }
 #gameover-modal[open] {
   -webkit-animation: show 1s ease normal;
@@ -86,17 +122,12 @@ h1 span {
   }
 }
 
-.restart {
-  padding: 1rem;
-  background-color: aqua;
-  width: 100%;
+.btn {
+  margin-top: 1rem;
+  padding: 0.5rem 2rem;
   text-transform: uppercase;
-}
-
-.x-mark {
-  color: aquamarine;
-}
-
-.o-mark {
-  color: #3a3b3c;
+  font-size: 20px;
+  cursor: pointer;
+  width: 100%;
+  outline: none;
 }

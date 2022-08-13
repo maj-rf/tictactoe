@@ -41,17 +41,10 @@ const Gameboard = (() => {
 
 const display = (() => {
   let grids = document.querySelectorAll('.grid');
-  let restart = document.querySelector('.restart');
-  let changeName = document.querySelector('.change');
-  let start = document.querySelector('.start');
-  let game = document.querySelector('.game');
-  let pregame = document.querySelector('.pre-game');
-  let p1 = document.querySelector('#player-1');
-  let p2 = document.querySelector('#player-2');
 
-  function render() {
+  function render(gameboard) {
     for (let i = 0; i < 9; i++) {
-      grids[i].textContent = Gameboard.board[i];
+      grids[i].textContent = gameboard[i];
     }
     return;
   }
@@ -64,37 +57,31 @@ const display = (() => {
     return;
   }
 
-  return {
-    grids,
-    render,
-    showWinner,
-    restart,
-    start,
-    game,
-    pregame,
-    p1,
-    p2,
-    changeName,
-  };
+  return { render, showWinner, grids };
 })();
 
-const game = (() => {
+const game = ((Gameboard, Player, display) => {
   let p1;
   let p2;
   let currentPlayer;
+  let restartBtn = document.querySelector('.restart');
+  let changeBtn = document.querySelector('.change');
+  let startBtn = document.querySelector('.start');
+  let game = document.querySelector('.game');
+  let pregame = document.querySelector('.pre-game');
+  let p1_element = document.querySelector('#player-1');
+  let p2_element = document.querySelector('#player-2');
 
   function restartGame() {
     Gameboard.resetBoard();
     currentPlayer = p1;
-    display.render();
+    display.render(Gameboard.board);
   }
 
   function changeName() {
-    Gameboard.resetBoard();
-    currentPlayer = p1;
-    display.render();
-    display.game.style.display = 'none';
-    display.pregame.style.display = 'block';
+    restartGame();
+    game.style.display = 'none';
+    pregame.style.display = 'flex';
     return;
   }
 
@@ -105,7 +92,7 @@ const game = (() => {
   function nextMove(index, player) {
     if (Gameboard.board[index]) return;
     Gameboard.board[index] = player.marker;
-    display.render();
+    display.render(Gameboard.board);
     return;
   }
 
@@ -113,7 +100,6 @@ const game = (() => {
     let boardHasSpace = !Gameboard.board.every(
       (grid) => grid === 'X' || grid === 'O'
     );
-
     let hasWinner = Gameboard.winCondition.some((win) => {
       return win.every((index) => Gameboard.board[index] === player.marker)
         ? true
@@ -125,23 +111,26 @@ const game = (() => {
     else return;
   }
 
-  //Events
-  display.start.addEventListener('click', (e) => {
-    e.preventDefault();
-    display.game.style.display = 'block';
-    display.pregame.style.display = 'none';
-    p1 = Player(display.p1.value, 'X');
-    p2 = Player(display.p2.value, 'O');
-    currentPlayer = p1;
-  });
+  function init() {
+    restartGame();
+    startBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      game.style.display = 'flex';
+      pregame.style.display = 'none';
+      p1 = Player(p1_element.value, 'X');
+      p2 = Player(p2_element.value, 'O');
+      currentPlayer = p1;
+    });
 
-  display.restart.addEventListener('click', restartGame);
-  display.changeName.addEventListener('click', changeName);
-  display.grids.forEach((grid, index) =>
-    grid.addEventListener('click', () => {
-      nextMove(index, currentPlayer);
-      checkWinner(currentPlayer);
-      currentPlayer = changePlayer(currentPlayer);
-    })
-  );
-})();
+    restartBtn.addEventListener('click', restartGame);
+    changeBtn.addEventListener('click', changeName);
+    display.grids.forEach((grid, index) =>
+      grid.addEventListener('click', () => {
+        nextMove(index, currentPlayer);
+        checkWinner(currentPlayer);
+        currentPlayer = changePlayer(currentPlayer);
+      })
+    );
+  }
+  init();
+})(Gameboard, Player, display);
