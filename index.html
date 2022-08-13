@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="styles/style.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> 
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="styles/style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
     <title>Tic-Tac-Toe</title>
-</head>
-<body>
-    <div class="start-game"> 
-      <div>TicTacToe</div> 
-      <button class="play-btn">Play Game</button>
-    </div>
-    <div class="play-game">
-      <header>
-        <h1>Tic</h1>
-        <h1 id="tac">Tac</h1>
-        <h1>Toe</h1> 
-      </header>
+  </head>
+  <body>
+    <section class="pre-game">
+      <h1>Play Tic<span>Tac</span>Toe</h1>
+      <form class="name-form">
+        <label for="player-1">Player 1:</label>
+        <input type="text" id="player-1" required />
+        <label for="player-2">Player 2:</label>
+        <input type="text" id="player-2" required />
+        <button type="submit" class="btn start">Start</button>
+      </form>
+    </section>
+    <section class="game">
+      <h1>Tic<span>Tac</span>Toe</h1>
       <div class="board" id="gameboard">
-          <div class="grid grid-hover" id="squares" data-num="0"></div>
-          <div class="grid grid-hover" id="squares" data-num="1"></div>
-          <div class="grid grid-hover" id="squares" data-num="2"></div>
-          <div class="grid grid-hover" id="squares" data-num="3"></div>
-          <div class="grid grid-hover" id="squares" data-num="4"></div>
-          <div class="grid grid-hover" id="squares" data-num="5"></div>
-          <div class="grid grid-hover" id="squares" data-num="6"></div>
-          <div class="grid grid-hover" id="squares" data-num="7"></div>
-          <div class="grid grid-hover" id="squares" data-num="8"></div>
+        <div class="grid grid-hover"></div>
+        <div class="grid grid-hover"></div>
+        <div class="grid grid-hover"></div>
+        <div class="grid grid-hover"></div>
+        <div class="grid grid-hover"></div>
+        <div class="grid grid-hover"></div>
+        <div class="grid grid-hover"></div>
+        <div class="grid grid-hover"></div>
+        <div class="grid grid-hover"></div>
       </div>
-      <div class="game-state"></div>
-      <div class="settings">
-        <button class="reset-btn" id="reset">Reset Game</button>
-      </div>
-    </div>
-    <div class="game-over">
-      <div>GAME OVER</div>
-    </div>
-    <script src ="scripts/ttt.js"></script>
-</body>
+    </section>
+
+    <dialog id="gameover-modal">
+      <h2>Game Over!</h2>
+      <p class="winner"></p>
+      <form method="dialog">
+        <button class="btn restart">Restart</button>
+        <button class="btn change">Change Name</button>
+      </form>
+    </dialog>
+    <script src="./scripts/index.js"></script>
+  </body>
 </html>
